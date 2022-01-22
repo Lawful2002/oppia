@@ -139,6 +139,7 @@ export class EditThumbnailModalComponent implements OnInit {
   }
 
   onFileChanged(file: File): void {
+    this.openInUploadMode = true;
     this.uploadedImageMimeType = file.type;
     this.invalidImageWarningIsShown = false;
     this.invalidFilenameWarningIsShown = false;
