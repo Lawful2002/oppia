@@ -74,7 +74,8 @@ import { MyHammerConfig, toastrConfig } from 'pages/oppia-root/app.module';
     TranslationOpportunitiesComponent,
     TranslationSuggestionReviewModalComponent,
     TranslationTopicSelectorComponent,
-    TranslationModalComponent
+    TranslationModalComponent,
+    OpportunityNavigationComponent
   ],
   entryComponents: [
     CkEditorCopyToolbarComponent,
@@ -86,7 +87,8 @@ import { MyHammerConfig, toastrConfig } from 'pages/oppia-root/app.module';
     TranslationOpportunitiesComponent,
     TranslationSuggestionReviewModalComponent,
     TranslationTopicSelectorComponent,
-    TranslationModalComponent
+    TranslationModalComponent,
+    OpportunityNavigationComponent
   ],
   providers: [
     {
@@ -119,6 +121,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { downgradeModule } from '@angular/upgrade/static';
 import { SharedFormsModule } from 'components/forms/shared-forms.module';
 import { ToastrModule } from 'ngx-toastr';
+import { OpportunityNavigationComponent } from './modal-templates/opportunity-navigation.component';
 
 const bootstrapFnAsync = async(extraProviders: StaticProvider[]) => {
   const platformRef = platformBrowserDynamic(extraProviders);

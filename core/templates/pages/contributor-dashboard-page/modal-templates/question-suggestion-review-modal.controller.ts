@@ -142,6 +142,7 @@ angular.module('oppia').controller('QuestionSuggestionReviewModalController', [
     };
 
     $scope.refreshModalData = function() {
+      $scope.showQuestion = false;
       SkillBackendApiService.fetchSkillAsync(
         $scope.suggestion.change.skill_id
       ).then((skillDict) => {
@@ -157,7 +158,7 @@ angular.module('oppia').controller('QuestionSuggestionReviewModalController', [
       if ($scope.isLastItem) {
         return;
       }
-      $scope.showQuestion = false;
+
       $scope.skippedContributionIds.push($scope.currentSuggestionId);
 
       let lastContributionId = $scope.remainingContributionIds.pop();

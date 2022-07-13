@@ -182,20 +182,13 @@
       </button>
     </span>
   </div>
-  <div class="oppia-pagination-container">
-    <button type="button"
-            class="oppia-pagination-button"
-            (click)="gotoPreviousItem()"
-            [disabled]="isFirstItem">
-      <span class="material-icons">navigate_before</span>Previous
-    </button>
-    <button type="button"
-            class="oppia-pagination-button"
-            (click)="gotoNextItem()"
-            [disabled]="isLastItem">
-      Next<span class="material-icons">navigate_next</span>
-    </button>
-  </div>
+  <oppia-opportunity-navigation [contributionType]="'translation'"
+                                [remainingContributionIds]="remainingContributionIds"
+                                [skippedContributionIds]="skippedContributionIds"
+                                [activeSuggestionId]="activeSuggestionId"
+                                [resolvedSuggestionIds]="resolvedSuggestionIds"
+                                (navigationEvent)="refreshModalData($event)">    
+  </oppia-opportunity-navigation>
 </div>
 
 <style>

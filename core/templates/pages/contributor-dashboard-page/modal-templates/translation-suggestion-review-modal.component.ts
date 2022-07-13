@@ -33,6 +33,7 @@ import { AppConstants } from 'app.constants';
 import constants from 'assets/constants';
 import { ListSchema, UnicodeSchema } from 'services/schema-default-value.service';
 import { UserContributionRightsDataBackendDict } from 'services/user-backend-api.service';
+import { OpportunityNavigationComponent } from './opportunity-navigation.component';
 
 interface HTMLSchema {
   'type': string;
@@ -141,6 +142,9 @@ export class TranslationSuggestionReviewModalComponent implements OnInit {
   @ViewChild('translationContainer')
     translationContainer!: ElementRef;
 
+  @ViewChild(OpportunityNavigationComponent)
+    opportunityNavigationComponent: OpportunityNavigationComponent;
+
   HTML_SCHEMA: HTMLSchema = { type: 'html' };
   MAX_REVIEW_MESSAGE_LENGTH = constants.MAX_REVIEW_MESSAGE_LENGTH;
   SET_OF_STRINGS_SCHEMA: ListSchema = {
@@ -203,7 +207,6 @@ export class TranslationSuggestionReviewModalComponent implements OnInit {
   }
 
   init(): void {
-    this.refreshModalData();
     this.userCanReviewTranslationSuggestionsInLanguages = [];
     this.languageCode = this.activeSuggestion.change.
       language_code;
@@ -328,7 +331,17 @@ export class TranslationSuggestionReviewModalComponent implements OnInit {
     }
   }
 
-  refreshModalData(): void {
+  refreshModalData(contributionId: string): void {
+    this.activeSuggestionId = contributionId;
+    this.activeContribution = this.allContributions[
+      contributionId];
+
+    if (!this.activeContribution.details) {
+      this.activeModal.close(this.resolvedSuggestionIds);
+      return;
+    }
+    // Close modal instance if the suggestion's corresponding opportunity
+    // is deleted. See issue #14234.
     this.activeSuggestion = this.activeContribution.suggestion;
     if (this.activeContribution.details === null) {
       return;
@@ -343,63 +356,8 @@ export class TranslationSuggestionReviewModalComponent implements OnInit {
       `${this.activeContributionDetails.chapter_title}`
     );
     // This is needed to re-calculate height of the panels.
+    this.init();
     this.calculatePanelHeight();
-  }
-
-  gotoNextItem(): void {
-    let lastContributionId = this.remainingContributionIds.pop();
-    // If the current item is the last item, do not navigate.
-    if (lastContributionId === undefined) {
-      return;
-    }
-    // This prevents resolved contributions from getting added to the list.
-    if (!this.resolvedSuggestionIds.includes(this.activeSuggestionId)) {
-      this.skippedContributionIds.push(this.activeSuggestionId);
-    }
-
-    this.activeSuggestionId = lastContributionId;
-    this.activeContribution = this.allContributions[
-      lastContributionId];
-
-    this.isLastItem = this.remainingContributionIds.length === 0;
-    this.isFirstItem = this.skippedContributionIds.length === 0;
-
-    // Close modal instance if the suggestion's corresponding opportunity
-    // is deleted. See issue #14234.
-    if (!this.activeContribution.details) {
-      this.activeModal.close(this.resolvedSuggestionIds);
-      return;
-    }
-
-    this.init();
-  }
-
-  gotoPreviousItem(): void {
-    let lastContributionId = this.skippedContributionIds.pop();
-    // If the current item is the first item, do not navigate.
-    if (lastContributionId === undefined) {
-      return;
-    }
-    // This prevents resolved contributions from getting added to the list.
-    if (!this.resolvedSuggestionIds.includes(this.activeSuggestionId)) {
-      this.remainingContributionIds.push(this.activeSuggestionId);
-    }
-
-    this.activeSuggestionId = lastContributionId;
-    this.activeContribution = this.allContributions[
-      lastContributionId];
-
-    this.isLastItem = this.remainingContributionIds.length === 0;
-    this.isFirstItem = this.skippedContributionIds.length === 0;
-
-    // Close modal instance if the suggestion's corresponding opportunity
-    // is deleted. See issue #14234.
-    if (!this.activeContribution.details) {
-      this.activeModal.close(this.resolvedSuggestionIds);
-      return;
-    }
-
-    this.init();
   }
 
   processAndGotoNextItem(suggestionId: string): void {
@@ -414,7 +372,7 @@ export class TranslationSuggestionReviewModalComponent implements OnInit {
       return;
     }
     // Else go the next item.
-    this.gotoNextItem();
+    this.opportunityNavigationComponent.gotoNextItem();
   }
 
   acceptAndReviewNext(): void {

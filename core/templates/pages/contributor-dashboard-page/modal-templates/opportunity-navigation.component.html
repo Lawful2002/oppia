@@ -1,0 +1,45 @@
+<div class="oppia-pagination-container">
+  <button type="button"
+          class="oppia-pagination-button"
+          (click)="gotoPreviousItem()"
+          [disabled]="isFirstItem">
+    <span class="material-icons">navigate_before</span>Previous
+  </button>
+  <button type="button"
+          class="oppia-pagination-button"
+          (click)="gotoNextItem()"
+          [disabled]="isLastItem">
+    Next<span class="material-icons">navigate_next</span>
+  </button>
+</div>
+
+<style>
+    .oppia-pagination-container {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      width: 100%;
+    }
+    .oppia-pagination-button {
+      background-color: transparent;
+      border: none;
+      box-sizing: border-box;
+      color: #009688;
+      font-size: 18px;
+      font-weight: bold;
+      min-height: 40px;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .oppia-pagination-button:hover {
+      border: 2px solid #009688;
+      border-radius: 5px;
+    }
+    .oppia-pagination-button[disabled] {
+      color: #a9e5df;
+    }
+    .oppia-pagination-button[disabled]:hover {
+      border: none;
+    }
+</style>
