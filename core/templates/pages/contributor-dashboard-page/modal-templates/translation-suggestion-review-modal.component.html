@@ -187,11 +187,15 @@
                                 [skippedContributionIds]="skippedContributionIds"
                                 [activeSuggestionId]="activeSuggestionId"
                                 [resolvedSuggestionIds]="resolvedSuggestionIds"
-                                (navigationEvent)="refreshModalData($event)">    
+                                (navigationEvent)="refreshModalData($event)"
+                                class="oppia-naviagtion">    
   </oppia-opportunity-navigation>
 </div>
 
 <style>
+  .oppia-naviagtion {
+    width: 100%;
+  }
   .oppia-review-message {
     border: 1px solid #ccc;
     margin-top: 10px;
@@ -206,35 +210,7 @@
   .modal-footer {
     display: flex;
     flex-direction: column;
-  }
-  .oppia-pagination-container {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-    width: 100%;
-  }
-  .oppia-pagination-button {
-    background-color: transparent;
-    border: none;
-    box-sizing: border-box;
-    color: #009688;
-    font-size: 18px;
-    font-weight: bold;
-    min-height: 40px;
-    min-width: 100px;
-    text-align: center;
-  }
-
-  .oppia-pagination-button:hover {
-    border: 2px solid #009688;
-    border-radius: 5px;
-  }
-  .oppia-pagination-button[disabled] {
-    color: #a9e5df;
-  }
-  .oppia-pagination-button[disabled]:hover {
-    border: none;
-  }
+  }  
   .oppia-collapse-content {
     display: none;
   }
